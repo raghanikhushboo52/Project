@@ -1,0 +1,133 @@
+store Procedure
+
+syntax:
+
+Create Procedure
+
+
+	CREATE PROCEDURE PROCEDURE_NAME
+	AS
+	SQL_STATEMENT
+	GO;
+
+Execute Procedure
+
+	EXEC PROCEDURE_NAME
+
+Example:
+
+	Query:
+	
+	1. Select AllEmployee
+
+		Create Procedure
+	
+			CREATE PROCEDURE SELECT_ALL_EMPLOYEE
+			AS
+			SELECT * FROM EMPLOYEE
+			GO;
+
+		Execute Procedure
+
+			EXEC SELECT_ALL_EMPLOYEE
+
+	2. Select AllEmployee whose name=abc;(Single Parameter)
+	
+		Create Procedure
+	
+			CREATE PROCEDURE SELECT_ALL_EMPLOYEE_WITH_NAME @NAME VARCHAR(MAX)
+			AS
+			SELECT * FROM EMPLOYEE WHERE NAME=@NAME
+			GO;
+
+		Execute Procedure 
+
+			EXEC SELECT_ALL_EMPLOYEE_WITH_NAME @NAME='ABC';
+
+	3. Select All Employee whose name=abc OR department=Account;(Multiple Parameter)
+
+		Create Procedure
+
+			CREATE PROCEDURE SELECT_ALL_EMPLOYEE_WITH_NAME_AND_DEPARTMENT @NAME VARCHAR(MAX),@DEPARTMENT VARHCHAR(MAX)
+			AS
+			SELECT * FROM EMPLOYEE WHERE NAME=@NAME OR DEPARTMENT=@DEPARTMENT
+			GO;
+
+		Execute Procedure 
+	
+			EXEC SELECT_ALL_EMPLOYEE_WITH_NAME_AND_DEPARTMENT @NAME='ABC', @DEPARTMENT='ACCOUNT';
+
+
+	4. Create Table for Student;
+
+		CREATE TABLE 
+		(
+			STUDENTID INT IDENTITY(1,1) NOT NULL PRIMARY KEY,
+			STUDENT_NAME VARCHAR(50),
+			CITY VARCHAR(50)
+		)
+
+	5.Insert,Update and Delete data from Student
+
+		Create Procedure
+
+			CREATE PROCEDURE STUDENT_PROCEDURE
+			(
+				@STUDENTID INT,
+				@STUDENT_NAME VARCHAR(50),
+				@CITY VARCHAR(50),
+				@OPT VARCHAR(50)
+			)
+			AS
+				BEGIN
+					IF(@OPT='INSERT')
+					BEGIN
+						INSERT INTO STUDENT(STUDENT_NAME,CITY)
+						VALUES(@STUDENT_NAME,@CITY)
+					END
+					IF(@OPT='UPDATE')
+					BEGIN
+						UPDATE STUDENT SET STUDENT_NAME=@STUDENT_NAME, CITY=@CITY
+					END
+					IF(@OPT='DELETE')
+					BEGIN
+						DELETE FROM STUDENT WHERE STUDENTID=@STUDENTID
+					END
+				END	
+
+		Execute Procedure
+			EXEC STUDENT_PROCEDURE 1,'KOMAL','SOJAT','INSERT'
+
+			EXEC STUDENT_PROCEDURE 1,'KOMAL PURUSHWANI', 'SOJAT', 'UPDATE'
+
+			EXEC STUDENT_PROCEDURE 1, 'KOMAL PURUSHWANI', 'SOJAT', 'DELETE'
+
+
+	6. Alter Table Student Add Column
+	
+		Create Procedure
+
+			CREATE PROCEDURE ALTER_STUDENT_ADD_COLUMN
+			AS 
+			BEGIN
+				ALTER TABLE STUDENT 
+				ADD DEPARTMENT VARCHAR(50)
+			END
+			GO
+
+		Execute Procedure
+
+			EXEC ALTER_STUDENT_ADD_COLUMN
+
+
+	7. Rename column name in student table
+
+
+
+
+
+
+
+
+		
+		
